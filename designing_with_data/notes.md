@@ -6,6 +6,8 @@
       - metric sensitivity: how much of a change in experiment it takes to cause a change in the metric. It is important to select metrics that are capable of detecting and reflecting the change you are making.
       - avoid bias, don't select metrics that can't fail
       - tracking multiple metrics, choose secondary metrics that can give the full picture
+      - metrics can change over the time, as business is evolving: netflix example, they track watching hours, as it's more sensitive. In the past, when DVDs were still a thing - proxy metric that they used was adding movie to the queue.
+
 3. Identify an area of focus for achieving that goal:
     - by addressing a problem that you want to solve for your users;
     - finding opportunity area to offer your users something that didn't exist before
