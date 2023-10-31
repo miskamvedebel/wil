@@ -67,3 +67,4 @@ if __name__ == '__main__':
     foods = build_menu(names, values, calories)
 
     test_greedys(foods=foods, max_units=750)
+    test_greedys(foods=foods, max_units=1000)
