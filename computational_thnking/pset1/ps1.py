@@ -32,6 +32,31 @@ def load_cows(filename):
 
 
 # Problem 1
+def make_iteration(lst, limit=10):
+    """Function that makes just one step, deciding which cows to take
+    """
+    temp = []
+    while True:
+        s = sorted(lst, key=lambda x: x[1], reverse=True)
+        val, lst = s.pop(0), s
+        k, mv = val
+        if mv <= limit:
+            temp.append(k)
+            limit -= mv
+        if not lst:
+            break
+    return temp
+def make_new_dict(names, d):
+    """Helper function that prepares the new dictionary
+    """
+    [d.pop(name) for name in names]
+    return d
+
+def not_possible(d, limit=10):
+    """Function that exits the cycle
+    """
+    return all([x >= limit for x in d.values()])
+
 def greedy_cow_transport(cows,limit=10):
     """
     Uses a greedy heuristic to determine an allocation of cows that attempts to
@@ -55,7 +80,15 @@ def greedy_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
-    pass
+    cc = cows.copy()
+    res = []
+    while not not_possible(cc, limit=limit):
+        lst = cc.items()
+        it = make_iteration(lst, limit=limit)
+        res.append(it)
+        cc = make_new_dict(it, cc)
+    return res
+    
 
 
 # Problem 2
@@ -80,7 +113,16 @@ def brute_force_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
-    pass
+    parts = get_partitions(cows)
+    possible = []
+    for part in parts:
+        weights = []
+        
+        for ppart in part:
+            weights.append(sum([cows.get(cow) for cow in ppart]) <= limit)
+        if all(weights):
+            possible.append(part)
+    return sorted(possible, key=lambda x: len(x), reverse=False)[0]
 
         
 # Problem 3
