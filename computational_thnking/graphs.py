@@ -125,10 +125,36 @@ def testSP(source, destination):
     else:
         print(f"There is no path from {source} to {destination}")
 
+print("DFS algorithm:")
 testSP('Chicago', 'Boston')
-print("Another test")
 testSP('Boston', 'Phoenix')
+print("DFS end #########")
 
+
+def BFS(graph, start, end, toPrint=False):
+    initPath = [start]
+    pathQueue = [initPath]
+    if toPrint:
+        print('Current BFS path: ', printPath(pathQueue))
+    while len(pathQueue) != 0:
+        tmpPath = pathQueue.pop(0)
+        print('Current BFS path: ', printPath(tmpPath))
+        lastNode = tmpPath[-1]
+        if lastNode == end:
+            return tmpPath
+        for nextNode in graph.childrenOf(lastNode):
+            if nextNode not in tmpPath:
+                newPath = tmpPath + [nextNode]
+                pathQueue.append(newPath)
+    return None
+
+def shortestPath(graph, start, end, toPrint=False):
+    return BFS(graph, start, end, toPrint)
+
+print("BFS algorithm:")
+testSP('Chicago', 'Boston')
+testSP('Boston', 'Phoenix')
+print("BFS end #########")
 
 
 
