@@ -1,3 +1,5 @@
+import random
+
 class Location(object):
     def __init__(self, x, y):
         """x, y are floats"""
@@ -45,3 +47,37 @@ class Field(object):
         xDist, yDist = drunk.takeStep()
         currentLocation = self.drunks[drunk]
         self.drunks[drunk] = currentLocation.move(xDist, yDist)
+
+class Drunk(object):
+    def __init__(self, name) -> None:
+        self.name = name
+    def __str__(self) -> str:
+        return f'This drunk is named {self.name}'
+
+class UsualDrunk(Drunk):
+    def takeStep(self):
+        stepChoices = [(0.0, 1.0), (0.0, -1.0),
+        (1.0, 0.0), (-1.0, 0.0)]
+        return random.choice(stepChoices)
+
+class ColdDrunk(Drunk):
+    def takeStep(self):
+        stepChoices = [(0.0, 0.9), (0.0, -1.1),
+        (1.0, 0.0), (-1.0, 0.0)]
+        return random.choice(stepChoices)
+
+def walk(f, d, numSteps):
+    start = f.getLoc(d)
+    for s in range(numSteps):
+        f.moveDrunk(d)
+    return start.distFrom(f.getloc(d))
+
+def simWalks(numSteps, numTrials, dClass):
+    Homer = dClass()
+    origin = Location(0, 0)
+    distances = []
+    for t in range(numTrials):
+        f = Field()
+        f.addDrunk(Homer, origin)
+        distances.append(round(walk(f, Homer, numSteps), 1))
+    return distances
